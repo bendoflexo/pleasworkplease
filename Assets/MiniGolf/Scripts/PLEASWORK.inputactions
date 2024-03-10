@@ -1,0 +1,34 @@
+{
+    "name": "PLEASWORK",
+    "maps": [
+        {
+            "name": "PLEASE",
+            "id": "0ec1c5e5-f926-439d-b42b-7aff63c528a7",
+            "actions": [
+                {
+                    "name": "Mouse",
+                    "type": "Value",
+                    "id": "474941ad-40e4-463d-91a2-614d1da0904e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "b133a834-48be-4073-a607-936478adcdbf",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Mouse",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
