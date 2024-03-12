@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+using UnityEngine;
+using Cinemachine;
 
 public class LevelManager : MonoBehaviour
 {
@@ -7,7 +8,10 @@ public class LevelManager : MonoBehaviour
     public GameObject ballPrefab;           
     public Vector3 ballSpawnPos;          
 
-    public LevelData[] levelDatas;          
+    public LevelData[] levelDatas;
+
+    [SerializeField] public CinemachineVirtualCamera vcam;
+    [SerializeField] public GameObject cameraPrefab;
 
     private int shotCount = 0;          
 
@@ -23,6 +27,13 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        var vcam = GetComponent<CinemachineVirtualCamera>();
+       
+        
+    }
+
     public void SpawnLevel(int levelIndex)
     {
          if (levelIndex < 0 || levelIndex >= levelDatas.Length)
@@ -31,13 +42,21 @@ public class LevelManager : MonoBehaviour
         UIManager.instance.ShowMainMenu(); 
         return;
     }
-        
+        levelDatas[levelIndex].levelPrefab.SetActive(true);
         Instantiate(levelDatas[levelIndex].levelPrefab, Vector3.zero, Quaternion.identity);
         shotCount = levelDatas[levelIndex].shotCount;                                  
-        UIManager.instance.ShotText.text = shotCount.ToString();                     
+        UIManager.instance.ShotText.text = shotCount.ToString();    
+
+        ballPrefab.SetActive(true);
+        DontDestroyOnLoad(ballPrefab);
+        DontDestroyOnLoad(this);
+        DontDestroyOnLoad(cameraPrefab);
+        vcam.LookAt = ballPrefab.transform; 
+     // ballPrefab = GameObject.FindGameObjectWithTag("Player").GetComponent<GameObject>();
+        
                                                                    
-        GameObject ball = Instantiate(ballPrefab, ballSpawnPos, Quaternion.identity);
-    //    CameraFollow.instance.SetTarget(ball);                     
+      //GameObject ball = Instantiate(ballPrefab, ballSpawnPos, Quaternion.identity);
+      //CameraFollow.instance.SetTarget(ballPrefab);                     
         GameManager.singleton.gameStatus = GameStatus.Playing;      
     }
 
@@ -59,8 +78,11 @@ public class LevelManager : MonoBehaviour
     {
         if (GameManager.singleton.gameStatus == GameStatus.Playing) 
         {
-            GameManager.singleton.gameStatus = GameStatus.Failed;   
-            UIManager.instance.GameResult();                       
+            GameManager.singleton.gameStatus = GameStatus.Failed;
+
+            ballPrefab.transform.position = ballSpawnPos;   
+            UIManager.instance.GameResult();  
+            vcam.Follow = ballPrefab.transform;                      
         }
     }
 
@@ -71,6 +93,9 @@ public class LevelManager : MonoBehaviour
             if (GameManager.singleton.currentLevelIndex < levelDatas.Length)    
             {
                 GameManager.singleton.currentLevelIndex++; 
+                
+                ballPrefab.transform.position = ballSpawnPos;
+                vcam.Follow = ballPrefab.transform; 
             }
             else
             {
@@ -81,4 +106,5 @@ public class LevelManager : MonoBehaviour
             UIManager.instance.GameResult();                        
         }
     }
+    
 }

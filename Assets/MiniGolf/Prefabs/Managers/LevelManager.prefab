@@ -44,8 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c43c84e062ed9a4b96fdcb6a25de756, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ballPrefab: {fileID: 5572983978374574789, guid: 29164484c8d97814284015c77f35de23,
-    type: 3}
+  ballPrefab: {fileID: 0}
   ballSpawnPos: {x: 0, y: 0.55, z: 0}
   levelDatas:
   - shotCount: 5
@@ -75,3 +74,4 @@ MonoBehaviour:
   - shotCount: 10
     levelPrefab: {fileID: 9151569318176113239, guid: a906578b22fe34101964ebd0d9535d9f,
       type: 3}
+  followingCamera: {fileID: 0}
