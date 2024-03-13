@@ -63,14 +63,14 @@ public class UIManager : MonoBehaviour
     }
 
 
-    void OnClick(Button btn)
+   /* void OnClick(Button btn)
     {
-       // mainMenu.SetActive(false);                                                      
-       // gameMenu.SetActive(true);                                                       
+        mainMenu.SetActive(false);                                                      
+        gameMenu.SetActive(true);                                                       
         GameManager.singleton.currentLevelIndex = btn.transform.GetSiblingIndex();    
         LevelManager.instance.SpawnLevel(GameManager.singleton.currentLevelIndex);      
     }
-
+    */
     
     
 
