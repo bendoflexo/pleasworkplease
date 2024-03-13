@@ -10,7 +10,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Image powerBar;       
     [SerializeField] private Text shotText;        
     [SerializeField] private GameObject mainMenu, gameMenu, gameOverPanel, retryBtn, nextBtn;   
-    [SerializeField] private GameObject container, lvlBtnPrefab;    
+    [SerializeField] private GameObject lvlBtnPrefab;    
+
+    public GameObject[] levelButtons;
 
     public Text ShotText { get { return shotText; } }   
     public Image PowerBar { get => powerBar; }          
@@ -49,22 +51,28 @@ public class UIManager : MonoBehaviour
     {
         for (int i = 0; i < LevelManager.instance.levelDatas.Length; i++)
         {
-            GameObject buttonObj = Instantiate(lvlBtnPrefab, container.transform);   
-            buttonObj.transform.GetChild(0).GetComponent<Text>().text = "" + (i + 1);   
-            Button button = buttonObj.GetComponent<Button>();                           
-            button.onClick.AddListener(() => OnClick(button));                          
+           // GameObject buttonObj = Instantiate(container);   
+           foreach(GameObject button in levelButtons)
+           {
+                button.SetActive(true);
+           } 
+          //  buttonObj.transform.GetChild(0).GetComponent<Text>().text = "" + (i + 1);   
+          //  Button button = buttonObj.GetComponent<Button>();                           
+          //  button.onClick.AddListener(() => OnClick(button));                          
         }
     }
 
 
     void OnClick(Button btn)
     {
-        mainMenu.SetActive(false);                                                      
-        gameMenu.SetActive(true);                                                       
-        GameManager.singleton.currentLevelIndex = btn.transform.GetSiblingIndex(); ;    
+       // mainMenu.SetActive(false);                                                      
+       // gameMenu.SetActive(true);                                                       
+        GameManager.singleton.currentLevelIndex = btn.transform.GetSiblingIndex();    
         LevelManager.instance.SpawnLevel(GameManager.singleton.currentLevelIndex);      
     }
 
+    
+    
 
     public void GameResult()
     {

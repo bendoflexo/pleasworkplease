@@ -14,7 +14,7 @@ public class BallControl : MonoBehaviour
     [SerializeField] private float MaxVelocity = 10f;
 
     private float force;                                    
-    private Rigidbody rgBody;                               
+    public Rigidbody rgBody;                               
 
     private Vector3 startPos, endPos;
     private bool canShoot = false, ballIsStatic = true;    

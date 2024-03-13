@@ -13,6 +13,8 @@ public class LevelManager : MonoBehaviour
     [SerializeField] public CinemachineVirtualCamera vcam;
     [SerializeField] public GameObject cameraPrefab;
 
+    private Rigidbody ballWork;
+
     private int shotCount = 0;          
 
     private void Awake()
@@ -30,8 +32,7 @@ public class LevelManager : MonoBehaviour
     private void Start()
     {
         var vcam = GetComponent<CinemachineVirtualCamera>();
-       
-        
+        ballWork = ballPrefab.GetComponent<Rigidbody>();
     }
 
     public void SpawnLevel(int levelIndex)
@@ -42,10 +43,11 @@ public class LevelManager : MonoBehaviour
         UIManager.instance.ShowMainMenu(); 
         return;
     }
+        GameManager.singleton.currentLevelIndex = levelIndex;
         levelDatas[levelIndex].levelPrefab.SetActive(true);
         Instantiate(levelDatas[levelIndex].levelPrefab, Vector3.zero, Quaternion.identity);
         shotCount = levelDatas[levelIndex].shotCount;                                  
-        UIManager.instance.ShotText.text = shotCount.ToString();    
+        UIManager.instance.ShotText.text = shotCount.ToString();
 
         ballPrefab.SetActive(true);
         DontDestroyOnLoad(ballPrefab);
@@ -80,9 +82,11 @@ public class LevelManager : MonoBehaviour
         {
             GameManager.singleton.gameStatus = GameStatus.Failed;
 
-            ballPrefab.transform.position = ballSpawnPos;   
+            ballPrefab.transform.position = ballSpawnPos; 
+              
             UIManager.instance.GameResult();  
-            vcam.Follow = ballPrefab.transform;                      
+            vcam.Follow = ballPrefab.transform;   
+            ballWork.velocity = Vector3.zero;         
         }
     }
 
